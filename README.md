@@ -12,9 +12,11 @@ This project involves writing a Python script for the "Introduction to Python" s
 Files used
 The raw data files used in this project are:
 
+bikeshare_AzimKhan.py
 chicago.csv
 new_york_city.csv
 washington.csv
+
 Credits
 The following resources were used to complete this project:
 
