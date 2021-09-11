@@ -86,3 +86,75 @@ def load_data(city, month, day):
         df = df[df['day_of_week'] == day.title()]
 
     return df
+
+
+def time_stats(df):
+    """Displays statistics on the most frequent times of travel."""
+
+    print('\nCalculating The Most Frequent Times of Travel...\n')
+    start_time = time.time()
+
+    # display the most common month
+    popular_month = df['month'].mode()[0]
+
+    print('Most Popular Month:', popular_month)
+
+    # display the most common day of week
+    popular_day_of_week = df['day_of_week'].mode()[0]
+
+    print('Most Day Of Week:', popular_day_of_week)
+
+    # display the most common start hour
+    popular_common_start_hour = df['hour'].mode()[0]
+
+    print('Most Common Start Hour:', popular_common_start_hour)
+
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('-'*40)
+
+
+def station_stats(df):
+    """Displays statistics on the most popular stations and trip."""
+
+    print('\nCalculating The Most Popular Stations and Trip...\n')
+    start_time = time.time()
+
+    # display most commonly used start station
+    popular_start_station = df['Start Station'].mode()[0]
+
+    print('Most Start Station:', popular_start_station)
+
+    # display most commonly used end station
+    popular_end_station = df['End Station'].mode()[0]
+
+    print('Most End Station:', popular_end_station)
+
+    # display most frequent combination of start station and end station trip
+    group_field=df.groupby(['Start Station','End Station'])
+    popular_combination_station = group_field.size().sort_values(ascending=False).head(1)
+    print('Most frequent combination of Start Station and End Station trip:\n', popular_combination_station)
+
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('-'*40)
+
+
+def trip_duration_stats(df):
+    """Displays statistics on the total and average trip duration."""
+
+    print('\nCalculating Trip Duration...\n')
+    start_time = time.time()
+
+    # display total travel time
+    total_travel_time = df['Trip Duration'].sum()
+
+    print('Total Travel Time:', total_travel_time)
+
+    # display mean travel time
+    mean_travel_time = df['Trip Duration'].mean()
+
+    print('Mean Travel Time:', mean_travel_time)
+
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('-'*40)
+
+
