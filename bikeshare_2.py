@@ -88,7 +88,98 @@ def load_data(city, month, day):
     return df
 
 
-k %s seconds." % (time.time() - start_time))
+def time_stats(df):
+    """Displays statistics on the most frequent times of travel."""
+
+    print('\nCalculating The Most Frequent Times of Travel...\n')
+    start_time = time.time()
+
+    # display the most common month
+    popular_month = df['month'].mode()[0]
+
+    print('Most Popular Month:', popular_month)
+
+    # display the most common day of week
+    popular_day_of_week = df['day_of_week'].mode()[0]
+
+    print('Most Day Of Week:', popular_day_of_week)
+
+    # display the most common start hour
+    popular_common_start_hour = df['hour'].mode()[0]
+
+    print('Most Common Start Hour:', popular_common_start_hour)
+
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('-'*40)
+
+
+def station_stats(df):
+    """Displays statistics on the most popular stations and trip."""
+
+    print('\nCalculating The Most Popular Stations and Trip...\n')
+    start_time = time.time()
+
+    # display most commonly used start station
+    popular_start_station = df['Start Station'].mode()[0]
+
+    print('Most Start Station:', popular_start_station)
+
+    # display most commonly used end station
+    popular_end_station = df['End Station'].mode()[0]
+
+    print('Most End Station:', popular_end_station)
+
+    # display most frequent combination of start station and end station trip
+    group_field=df.groupby(['Start Station','End Station'])
+    popular_combination_station = group_field.size().sort_values(ascending=False).head(1)
+    print('Most frequent combination of Start Station and End Station trip:\n', popular_combination_station)
+
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('-'*40)
+
+
+def trip_duration_stats(df):
+    """Displays statistics on the total and average trip duration."""
+
+    print('\nCalculating Trip Duration...\n')
+    start_time = time.time()
+
+    # display total travel time
+    total_travel_time = df['Trip Duration'].sum()
+
+    print('Total Travel Time:', total_travel_time)
+
+    # display mean travel time
+    mean_travel_time = df['Trip Duration'].mean()
+
+    print('Mean Travel Time:', mean_travel_time)
+
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print('-'*40)
+
+
+def user_stats(df,city):
+    """Displays statistics on bikeshare users."""
+
+    print('\nCalculating User Stats...\n')
+    start_time = time.time()
+
+    # Display counts of user types
+    print('User Type Stats:')
+    print(df['User Type'].value_counts())
+    if city != 'washington':
+        # Display counts of gender
+        print('Gender Stats:')
+        print(df['Gender'].value_counts())
+        # Display earliest, most recent, and most common year of birth
+        print('Birth Year Stats:')
+        most_common_year = df['Birth Year'].mode()[0]
+        print('Most Common Year:',most_common_year)
+        most_recent_year = df['Birth Year'].max()
+        print('Most Recent Year:',most_recent_year)
+        earliest_year = df['Birth Year'].min()
+        print('Earliest Year:',earliest_year)
+    print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
 
